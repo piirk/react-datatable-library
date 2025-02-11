@@ -1,26 +1,33 @@
 import React from 'react'
 
-type DataTableProps = {
-  data: any[]
-  columns: { title: string; dataIndex: string }[]
+interface Column {
+  title: string
+  dataIndex: string
+  render?: (value: any) => string
 }
 
-const DataTable: React.FC<DataTableProps> = ({ data, columns }) => {
+interface DataTableProps {
+  data: any[]
+  columns: Column[]
+}
+
+export const DataTable: React.FC<DataTableProps> = ({ data, columns }) => {
   return (
     <table>
       <thead>
         <tr>
-          {columns.map((col) => (
-            <th key={col.dataIndex}>{col.title}</th>
+          {columns.map((column) => (
+            <th key={column.dataIndex}>{column.title}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {data.map((row, rowIndex) => (
+        {data.map((record, rowIndex) => (
           <tr key={rowIndex}>
-            {columns.map((col) => (
-              <td key={col.dataIndex}>{row[col.dataIndex]}</td>
-            ))}
+            {columns.map((column) => {
+              const value = record[column.dataIndex]
+              return <td key={column.dataIndex}>{column.render ? column.render(value) : value}</td>
+            })}
           </tr>
         ))}
       </tbody>

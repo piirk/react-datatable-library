@@ -1,1 +1,3 @@
-export const placeholder = 'Hello'
+import DataTable from './DataTable'
+
+export { DataTable }

@@ -1,8 +1,13 @@
 import React from 'react'
 
+interface Column {
+  key: string
+  header: string
+}
+
 interface DataTableProps {
-  data: { [key: string]: any }[]
-  columns: string[]
+  data: Record<string, any>[]
+  columns: Column[]
 }
 
 const DataTable: React.FC<DataTableProps> = ({ data, columns }) => {
@@ -10,16 +15,16 @@ const DataTable: React.FC<DataTableProps> = ({ data, columns }) => {
     <table>
       <thead>
         <tr>
-          {columns.map((column, index) => (
-            <th key={index}>{column}</th>
+          {columns.map((col) => (
+            <th key={col.key}>{col.header}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((row, rowIndex) => (
           <tr key={rowIndex}>
-            {columns.map((column, colIndex) => (
-              <td key={colIndex}>{row[column]}</td>
+            {columns.map((col) => (
+              <td key={col.key}>{row[col.key]}</td>
             ))}
           </tr>
         ))}

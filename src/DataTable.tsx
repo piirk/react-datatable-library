@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
-import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material'
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TablePagination,
+  TextField,
+} from '@mui/material'
 
 interface Column {
   title: string
@@ -12,6 +20,7 @@ interface DataTableProps {
   columns: Column[]
   useMUI?: boolean
   rowsPerPageOptions?: number[]
+  enableSearch?: boolean
 }
 
 export const DataTable: React.FC<DataTableProps> = ({
@@ -19,9 +28,19 @@ export const DataTable: React.FC<DataTableProps> = ({
   columns,
   useMUI = false,
   rowsPerPageOptions = [10, 25, 50, 100],
+  enableSearch = false,
 }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0])
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const filteredData = data.filter((row) => {
+    return columns.some((col) => {
+      const value = row[col.dataIndex]
+      const renderedValue = col.render ? col.render(value) : value
+      return renderedValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    })
+  })
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -34,11 +53,26 @@ export const DataTable: React.FC<DataTableProps> = ({
     setPage(0)
   }
 
-  const paginatedData = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+    setPage(0)
+  }
+
+  const paginatedData = filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   if (useMUI) {
     return (
       <>
+        {enableSearch && (
+          <TextField
+            label="Search"
+            variant="outlined"
+            fullWidth
+            value={searchTerm}
+            onChange={handleSearchChange}
+            style={{ marginBottom: '20px' }}
+          />
+        )}
         <Table>
           <TableHead>
             <TableRow>
@@ -62,7 +96,7 @@ export const DataTable: React.FC<DataTableProps> = ({
         <TablePagination
           rowsPerPageOptions={rowsPerPageOptions}
           component="div"
-          count={data.length}
+          count={filteredData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -74,6 +108,15 @@ export const DataTable: React.FC<DataTableProps> = ({
 
   return (
     <>
+      {enableSearch && (
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search"
+          style={{ marginBottom: '20px' }}
+        />
+      )}
       <table>
         <thead>
           <tr>

@@ -9,6 +9,7 @@ declare module 'react-datatable-library' {
     data: any[]
     columns: DataTableColumn[]
     useMUI?: boolean
+    enableSearch?: boolean
   }
 
   export const DataTable: React.FC<DataTableProps>

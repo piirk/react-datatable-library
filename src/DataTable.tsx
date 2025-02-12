@@ -8,6 +8,8 @@ import {
   TablePagination,
   TextField,
   TableSortLabel,
+  TableContainer,
+  Paper,
 } from '@mui/material'
 
 interface Column {
@@ -85,7 +87,7 @@ export const DataTable: React.FC<DataTableProps> = ({
 
   if (useMUI) {
     return (
-      <>
+      <TableContainer>
         {enableSearch && (
           <TextField
             label="Search"
@@ -100,7 +102,7 @@ export const DataTable: React.FC<DataTableProps> = ({
           <TableHead>
             <TableRow>
               {columns.map((col) => (
-                <TableCell key={col.dataIndex}>
+                <TableCell key={col.dataIndex} style={{ fontWeight: 'bold' }}>
                   {col.sortable ? (
                     <TableSortLabel
                       active={sortedColumn === col.dataIndex}
@@ -137,12 +139,12 @@ export const DataTable: React.FC<DataTableProps> = ({
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </>
+      </TableContainer>
     )
   }
 
   return (
-    <>
+    <div>
       {enableSearch && (
         <input
           type="text"
@@ -202,7 +204,7 @@ export const DataTable: React.FC<DataTableProps> = ({
           ))}
         </select>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
 
 interface Column {
   title: string
@@ -9,9 +10,35 @@ interface Column {
 interface DataTableProps {
   data: any[]
   columns: Column[]
+  useMUI?: boolean
 }
 
-export const DataTable: React.FC<DataTableProps> = ({ data, columns }) => {
+export const DataTable: React.FC<DataTableProps> = ({ data, columns, useMUI = false }) => {
+  if (useMUI) {
+    return (
+      <Table>
+        <TableHead>
+          <TableRow>
+            {columns.map((col) => (
+              <TableCell key={col.dataIndex}>{col.title}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row, rowIndex) => (
+            <TableRow key={rowIndex}>
+              {columns.map((col) => (
+                <TableCell key={col.dataIndex}>
+                  {col.render ? col.render(row[col.dataIndex]) : row[col.dataIndex]}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    )
+  }
+
   return (
     <table>
       <thead>

@@ -9,7 +9,6 @@ import {
   TextField,
   TableSortLabel,
   TableContainer,
-  Paper,
 } from '@mui/material'
 
 interface Column {

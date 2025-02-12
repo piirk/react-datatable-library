@@ -7,12 +7,14 @@ import {
   TableBody,
   TablePagination,
   TextField,
+  TableSortLabel,
 } from '@mui/material'
 
 interface Column {
   title: string
   dataIndex: string
   render?: (value: any) => string
+  sortable?: boolean
 }
 
 interface DataTableProps {
@@ -33,14 +35,16 @@ export const DataTable: React.FC<DataTableProps> = ({
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0])
   const [searchTerm, setSearchTerm] = useState('')
+  const [sortedColumn, setSortedColumn] = useState<string | null>(null)
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null)
 
-  const filteredData = data.filter((row) => {
-    return columns.some((col) => {
-      const value = row[col.dataIndex]
-      const renderedValue = col.render ? col.render(value) : value
-      return renderedValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    })
-  })
+  const handleSort = (column: Column) => {
+    if (!column.sortable) return
+    setPage(0)
+    const isAsc = sortedColumn === column.dataIndex && sortOrder === 'asc'
+    setSortedColumn(column.dataIndex)
+    setSortOrder(isAsc ? 'desc' : 'asc')
+  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -58,7 +62,26 @@ export const DataTable: React.FC<DataTableProps> = ({
     setPage(0)
   }
 
-  const paginatedData = filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  const filteredData = data.filter((row) => {
+    return columns.some((col) => {
+      const value = row[col.dataIndex]
+      const renderedValue = col.render ? col.render(value) : value
+      return renderedValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    })
+  })
+
+  const sortedData = sortedColumn
+    ? [...filteredData].sort((a, b) => {
+        const aValue = a[sortedColumn]
+        const bValue = b[sortedColumn]
+
+        if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1
+        if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1
+        return 0
+      })
+    : filteredData
+
+  const paginatedData = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   if (useMUI) {
     return (
@@ -77,7 +100,19 @@ export const DataTable: React.FC<DataTableProps> = ({
           <TableHead>
             <TableRow>
               {columns.map((col) => (
-                <TableCell key={col.dataIndex}>{col.title}</TableCell>
+                <TableCell key={col.dataIndex}>
+                  {col.sortable ? (
+                    <TableSortLabel
+                      active={sortedColumn === col.dataIndex}
+                      direction={sortOrder || 'asc'}
+                      onClick={() => handleSort(col)}
+                    >
+                      {col.title}
+                    </TableSortLabel>
+                  ) : (
+                    col.title
+                  )}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -121,7 +156,16 @@ export const DataTable: React.FC<DataTableProps> = ({
         <thead>
           <tr>
             {columns.map((column) => (
-              <th key={column.dataIndex}>{column.title}</th>
+              <th key={column.dataIndex} onClick={() => handleSort(column)}>
+                {column.sortable ? (
+                  <>
+                    {column.title}
+                    {sortedColumn === column.dataIndex && (sortOrder === 'asc' ? ' ▲' : ' ▼')}
+                  </>
+                ) : (
+                  column.title
+                )}
+              </th>
             ))}
           </tr>
         </thead>

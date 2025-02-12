@@ -3,6 +3,7 @@ declare module 'react-datatable-library' {
     title: string
     dataIndex: string
     render?: (value: any) => string
+    sortable?: boolean
   }
 
   export interface DataTableProps {

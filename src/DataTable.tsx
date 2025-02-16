@@ -11,6 +11,7 @@ import {
   TableContainer,
 } from '@mui/material'
 import { DataTableProps, DataTableColumn } from './types'
+import { StyledTableCell } from './styles'
 
 export const DataTable: React.FC<DataTableProps> = ({
   data,
@@ -83,7 +84,7 @@ export const DataTable: React.FC<DataTableProps> = ({
         <TableHead sx={sx?.header}>
           <TableRow>
             {columns.map((col) => (
-              <TableCell key={col.dataIndex} sx={sx?.cell}>
+              <StyledTableCell key={col.dataIndex} sx={sx?.cell}>
                 <TableSortLabel
                   active={sortedColumn === col.dataIndex}
                   direction={sortOrder || 'asc'}
@@ -91,7 +92,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                 >
                   {col.title}
                 </TableSortLabel>
-              </TableCell>
+              </StyledTableCell>
             ))}
           </TableRow>
         </TableHead>

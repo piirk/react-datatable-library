@@ -15,7 +15,6 @@ interface Column {
   title: string
   dataIndex: string
   render?: (value: any) => string
-  sortable?: boolean
 }
 
 interface DataTableProps {
@@ -38,7 +37,6 @@ export const DataTable: React.FC<DataTableProps> = ({
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null)
 
   const handleSort = (column: Column) => {
-    if (!column.sortable) return
     setPage(0)
     const isAsc = sortedColumn === column.dataIndex && sortOrder === 'asc'
     setSortedColumn(column.dataIndex)
@@ -99,17 +97,13 @@ export const DataTable: React.FC<DataTableProps> = ({
             <TableRow>
               {columns.map((col) => (
                 <TableCell key={col.dataIndex} style={{ fontWeight: 'bold' }}>
-                  {col.sortable ? (
-                    <TableSortLabel
-                      active={sortedColumn === col.dataIndex}
-                      direction={sortOrder || 'asc'}
-                      onClick={() => handleSort(col)}
-                    >
-                      {col.title}
-                    </TableSortLabel>
-                  ) : (
-                    col.title
-                  )}
+                  <TableSortLabel
+                    active={sortedColumn === col.dataIndex}
+                    direction={sortOrder || 'asc'}
+                    onClick={() => handleSort(col)}
+                  >
+                    {col.title}
+                  </TableSortLabel>
                 </TableCell>
               ))}
             </TableRow>
@@ -154,14 +148,10 @@ export const DataTable: React.FC<DataTableProps> = ({
           <tr>
             {columns.map((column) => (
               <th key={column.dataIndex} onClick={() => handleSort(column)}>
-                {column.sortable ? (
-                  <>
-                    {column.title}
-                    {sortedColumn === column.dataIndex && (sortOrder === 'asc' ? ' ▲' : ' ▼')}
-                  </>
-                ) : (
-                  column.title
-                )}
+                <>
+                  {column.title}
+                  {sortedColumn === column.dataIndex && (sortOrder === 'asc' ? ' ▲' : ' ▼')}
+                </>
               </th>
             ))}
           </tr>

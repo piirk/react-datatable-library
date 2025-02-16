@@ -10,7 +10,7 @@ import {
   TableSortLabel,
   TableContainer,
 } from '@mui/material'
-import { DataTableProps, DataTableColumn } from 'react-datatable-library'
+import { DataTableProps, DataTableColumn } from './types'
 
 export const DataTable: React.FC<DataTableProps> = ({
   data,

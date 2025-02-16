@@ -12,6 +12,6 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node"
   },
-  "include": ["src", "index.d.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }

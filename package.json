@@ -21,7 +21,12 @@
     "datatable",
     "table",
     "component",
-    "library"
+    "library",
+    "mui",
+    "typescript",
+    "pagination",
+    "sorting",
+    "filtering"
   ],
   "author": "Baptiste BOUCHARECHAS",
   "peerDependencies": {

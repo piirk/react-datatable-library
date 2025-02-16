@@ -10,18 +10,7 @@ import {
   TableSortLabel,
   TableContainer,
 } from '@mui/material'
-
-interface Column {
-  title: string
-  dataIndex: string
-  render?: (value: any) => string
-}
-
-interface DataTableProps {
-  data: any[]
-  columns: Column[]
-  rowsPerPageOptions?: number[]
-}
+import { DataTableProps, DataTableColumn } from 'react-datatable-library'
 
 export const DataTable: React.FC<DataTableProps> = ({
   data,
@@ -34,7 +23,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   const [sortedColumn, setSortedColumn] = useState<string | null>(null)
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null)
 
-  const handleSort = (column: Column) => {
+  const handleSort = (column: DataTableColumn) => {
     setPage(0)
     const isAsc = sortedColumn === column.dataIndex && sortOrder === 'asc'
     setSortedColumn(column.dataIndex)

@@ -8,6 +8,7 @@ declare module 'react-datatable-library' {
   export interface DataTableProps {
     data: any[]
     columns: DataTableColumn[]
+    rowsPerPageOptions?: number[]
   }
 
   export const DataTable: React.FC<DataTableProps>

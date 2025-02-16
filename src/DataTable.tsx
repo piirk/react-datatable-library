@@ -69,7 +69,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   const paginatedData = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   return (
-    <TableContainer>
+    <TableContainer sx={sx?.container}>
       <TextField
         label="Search"
         variant="outlined"

@@ -16,6 +16,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   data,
   columns,
   rowsPerPageOptions = [10, 25, 50, 100],
+  sx,
 }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0])
@@ -75,14 +76,14 @@ export const DataTable: React.FC<DataTableProps> = ({
         fullWidth
         value={searchTerm}
         onChange={handleSearchChange}
-        style={{ marginBottom: '20px' }}
+        sx={sx?.search}
       />
 
-      <Table>
-        <TableHead>
+      <Table sx={sx?.table}>
+        <TableHead sx={sx?.header}>
           <TableRow>
             {columns.map((col) => (
-              <TableCell key={col.dataIndex} style={{ fontWeight: 'bold' }}>
+              <TableCell key={col.dataIndex} sx={sx?.cell}>
                 <TableSortLabel
                   active={sortedColumn === col.dataIndex}
                   direction={sortOrder || 'asc'}
@@ -94,11 +95,11 @@ export const DataTable: React.FC<DataTableProps> = ({
             ))}
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={sx?.body}>
           {paginatedData.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
+            <TableRow key={rowIndex} sx={sx?.row}>
               {columns.map((col) => (
-                <TableCell key={col.dataIndex}>
+                <TableCell key={col.dataIndex} sx={sx?.cell}>
                   {col.render ? col.render(row[col.dataIndex]) : row[col.dataIndex]}
                 </TableCell>
               ))}
@@ -114,6 +115,7 @@ export const DataTable: React.FC<DataTableProps> = ({
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        sx={sx?.pagination}
       />
     </TableContainer>
   )

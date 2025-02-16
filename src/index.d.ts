@@ -8,7 +8,6 @@ declare module 'react-datatable-library' {
   export interface DataTableProps {
     data: any[]
     columns: DataTableColumn[]
-    useMUI?: boolean
   }
 
   export const DataTable: React.FC<DataTableProps>

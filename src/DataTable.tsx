@@ -23,7 +23,6 @@ interface DataTableProps {
   columns: Column[]
   useMUI?: boolean
   rowsPerPageOptions?: number[]
-  enableSearch?: boolean
 }
 
 export const DataTable: React.FC<DataTableProps> = ({
@@ -31,7 +30,6 @@ export const DataTable: React.FC<DataTableProps> = ({
   columns,
   useMUI = false,
   rowsPerPageOptions = [10, 25, 50, 100],
-  enableSearch = false,
 }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0])
@@ -87,16 +85,15 @@ export const DataTable: React.FC<DataTableProps> = ({
   if (useMUI) {
     return (
       <TableContainer>
-        {enableSearch && (
-          <TextField
-            label="Search"
-            variant="outlined"
-            fullWidth
-            value={searchTerm}
-            onChange={handleSearchChange}
-            style={{ marginBottom: '20px' }}
-          />
-        )}
+        <TextField
+          label="Search"
+          variant="outlined"
+          fullWidth
+          value={searchTerm}
+          onChange={handleSearchChange}
+          style={{ marginBottom: '20px' }}
+        />
+
         <Table>
           <TableHead>
             <TableRow>
@@ -144,15 +141,14 @@ export const DataTable: React.FC<DataTableProps> = ({
 
   return (
     <div>
-      {enableSearch && (
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Search"
-          style={{ marginBottom: '20px' }}
-        />
-      )}
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Search"
+        style={{ marginBottom: '20px' }}
+      />
+
       <table>
         <thead>
           <tr>

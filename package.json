@@ -9,6 +9,10 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/piirk/react-datatable-library"
+  },
   "scripts": {
     "build": "tsup src/index.tsx --format esm,cjs --dts",
     "format": "prettier --write .",

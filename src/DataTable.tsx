@@ -9,6 +9,7 @@ import {
   TextField,
   TableSortLabel,
   TableContainer,
+  Box,
 } from '@mui/material'
 import { DataTableProps, DataTableColumn } from './types'
 import { StyledTableCell } from './styles'
@@ -80,34 +81,38 @@ export const DataTable: React.FC<DataTableProps> = ({
         sx={sx?.search}
       />
 
-      <Table sx={sx?.table}>
-        <TableHead sx={sx?.header}>
-          <TableRow>
-            {columns.map((col) => (
-              <StyledTableCell key={col.dataIndex} sx={sx?.cell}>
-                <TableSortLabel
-                  active={sortedColumn === col.dataIndex}
-                  direction={sortOrder || 'asc'}
-                  onClick={() => handleSort(col)}
-                >
-                  {col.title}
-                </TableSortLabel>
-              </StyledTableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody sx={sx?.body}>
-          {paginatedData.map((row, rowIndex) => (
-            <TableRow key={rowIndex} sx={sx?.row}>
-              {columns.map((col) => (
-                <TableCell key={col.dataIndex} sx={sx?.cell}>
-                  {col.render ? col.render(row[col.dataIndex]) : row[col.dataIndex]}
-                </TableCell>
+      <Box sx={{ overflow: 'auto' }}>
+        <Box sx={{ width: '100%', display: 'table', tableLayout: 'fixed' }}>
+          <Table sx={sx?.table}>
+            <TableHead sx={sx?.header}>
+              <TableRow>
+                {columns.map((col) => (
+                  <StyledTableCell key={col.dataIndex} sx={sx?.cell}>
+                    <TableSortLabel
+                      active={sortedColumn === col.dataIndex}
+                      direction={sortOrder || 'asc'}
+                      onClick={() => handleSort(col)}
+                    >
+                      {col.title}
+                    </TableSortLabel>
+                  </StyledTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody sx={sx?.body}>
+              {paginatedData.map((row, rowIndex) => (
+                <TableRow key={rowIndex} sx={sx?.row}>
+                  {columns.map((col) => (
+                    <TableCell key={col.dataIndex} sx={sx?.cell}>
+                      {col.render ? col.render(row[col.dataIndex]) : row[col.dataIndex]}
+                    </TableCell>
+                  ))}
+                </TableRow>
               ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+            </TableBody>
+          </Table>
+        </Box>
+      </Box>
       <TablePagination
         rowsPerPageOptions={rowsPerPageOptions}
         component="div"

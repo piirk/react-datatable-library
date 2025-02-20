@@ -1,6 +1,6 @@
 # react-datatable-library ![npm version](https://img.shields.io/npm/v/react-datatable-library)
 
-A lightweight and efficient React DataTable component built with Material UI (MUI) and TypeScript. It provides built-in pagination, sorting, and filtering capabilities.
+A lightweight and efficient **React DataTable** component built with **Material UI (MUI)** and **TypeScript**. It provides built-in pagination, sorting, and filtering, fully leveraging Material UI's design system.
 
 ## Installation
 

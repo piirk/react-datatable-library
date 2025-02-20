@@ -1,6 +1,6 @@
 {
   "name": "react-datatable-library",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A lightweight and efficient React DataTable component.",
   "main": "dist/index.js",
   "module": "dist/index.js",

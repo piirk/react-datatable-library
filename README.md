@@ -14,6 +14,13 @@ or
 yarn add react-datatable-library
 ```
 
+## Prerequisites
+
+Make sure you have the following prerequisites installed:
+
+- **Node.js**: >= 14.0.0
+- **Yarn**: >= 1.22.0
+
 ## Peer Dependencies
 
 Make sure you have the following dependencies installed in your project:
@@ -143,3 +150,7 @@ The component supports MUI's `sx` prop for custom styling:
 ## Contribution
 
 Contributions are welcome! Feel free to open issues or pull requests in the [GitHub repository](https://github.com/piirk/react-datatable-library).
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
